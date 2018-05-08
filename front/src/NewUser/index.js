@@ -1,12 +1,20 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import axios from 'axios';
+import {connect} from 'react-redux';
+import {creaters} from '../ActionCreaters';
 
+@connect((store)=>{
+    return {store};
+},(dispatch) =>{
+    return {dispatch};
+})
 export default class NewUser extends Component {
     state = {
         id: '',
         pwd: ''
     }
     render() {
+        console.log(this.props)
         return (
             <div>
                 <input value={this.state.id} placeholder='用户名' onChange={(event) => {
@@ -18,9 +26,10 @@ export default class NewUser extends Component {
                 }} />
                 <br/>
                 <button onClick = {()=>{
-                    axios.post('http://localhost:4396/newUserPrepare',this.state).then(rst=>{
-                        console.log(rst);
-                    })
+                    this.props.dispatch(creaters.action1({aaaa:'aaaa'}));
+                    // axios.post('http://localhost:4396/newUserPrepare',this.state).then(rst=>{
+                    //     console.log(rst);
+                    // })
                 }}>注册</button>
             </div>
         )
