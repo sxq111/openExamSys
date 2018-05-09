@@ -1,6 +1,7 @@
 module.exports = function (instance) {
     return {
-        tempUserModelFactory: require('./tempUser')(instance)
+        tempUserModel: require('./tempUser')(instance),
+        userModel: require('./userSchema')(instance)
     }
 
 }

@@ -4,18 +4,12 @@ import { historyChangeActionCreater, historyChangeReducer } from './historyBindS
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './Sagas';
 import actionTypes from './ActionCreaters/actionTypes' ;
-
+import regeisterReducer from './Reducer/regeister';
+ 
 const sagaMiddleware = createSagaMiddleware();
 const reducer = combineReducers({
     location: historyChangeReducer,
-    fatherField:combineReducers({
-        childField:(prevSate,action)=>{
-            if(action.type===actionTypes.actiontype1)
-            return 'xxxxx'
-            else 
-            return null;
-        }
-    })
+    regeister:regeisterReducer
 });
 const store = createStore(reducer,
     {},

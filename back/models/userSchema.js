@@ -1,7 +1,3 @@
-// mu
-// function (mongoose){
-
-// }
 module.exports = function (mongoose) {
     var schema = mongoose.Schema({
         email: {
@@ -16,7 +12,14 @@ module.exports = function (mongoose) {
             required:true,
             unique:true
         },
-        tempCode:String,
+        password_crypted:{
+            type: String,
+            required:true
+        },
+        salt:{
+            type: String,
+            required:true
+        }
     });
-    return mongoose.model('tempUser', schema);
+    return mongoose.model('user', schema);
 }

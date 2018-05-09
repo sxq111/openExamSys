@@ -2,9 +2,9 @@
 
 module.exports = {
     'GET /': async (ctx, next) => {
-        let promise = await ctx.db_tools.mdbFind('names', {});
-        console.log(promise);
-        ctx.response.body = promise;
+        throw new Error('xxxxx')
+        ctx.response.status = 200;
+        ctx.response.body = 'get ok';
     },
     'POST /login': async (ctx, next) => {
         //console.log(ctx.request.body);

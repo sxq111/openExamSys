@@ -1,11 +1,16 @@
 function listener() {
+    let err = null;
     return async (ctx, next) => {
         try {
             await next();
         } catch (e) {
-            console.log('ERROR',e.message)
+            console.log('ERRORCATCH', e.message);
+            err = e;
+        } finally {
+            if(!err)return;
             ctx.response.status = 400;
-            ctx.response.body = e.message;
+            ctx.response.body = {error:err.message};
+            err = null;
         }
     }
 }

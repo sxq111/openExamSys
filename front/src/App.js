@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import NewUser from './NewUser';
+import NewUser from './Containers/NewUser';
 import Helper from './historyHelper';
 import store from './store';
 import { Provider } from 'react-redux'

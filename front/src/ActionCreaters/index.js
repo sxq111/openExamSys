@@ -2,5 +2,7 @@ import actionCreaterFactory  from './actionCreaterFactory';
 import actionTypes from './actionTypes';
 
 export const creaters = {
-    action1:actionCreaterFactory(actionTypes.actiontype1)
+    getCheckCode:actionCreaterFactory(actionTypes.getCheckCode),
+    typeInCheckCode:actionCreaterFactory(actionTypes.typeInCheckCode),
+    sendCryptoToServe:actionCreaterFactory(actionTypes.sendCryptoToServe)
 }
