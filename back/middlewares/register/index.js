@@ -20,19 +20,28 @@ const newUserPrepare = async (ctx, next) => {
     }
 }
 const newUserCreate = async (ctx, next) => {
-    let { id, pwd_cryptoed } = ctx.request.body;
+    let { id, pwd_cryptoed, id_cryptoed } = ctx.request.body;
     let rst = await findOnePromise(ctx.models.tempUserModel, { 'userName': id });
-    var bytes  = CryptoJS.AES.decrypt(pwd_cryptoed, rst.tempCode);
+    let plainId = CryptoJS.AES.decrypt(id_cryptoed, rst.tempCode).toString(CryptoJS.enc.Utf8);
+    if (!id === plainId) {
+        throw new Error('验证失败');
+    }
+    var bytes = CryptoJS.AES.decrypt(pwd_cryptoed, rst.tempCode);
     var plainPwd = bytes.toString(CryptoJS.enc.Utf8);
     // console.log(plainPwd)
     let salt = '' + Math.floor(Math.random() * 1000000);
     let newUser = new ctx.models.userModel({
         email: rst.email,
-        userName:rst.userName,
-        salt:salt,
-        password_crypted:md5(plainPwd+salt).toString()
+        userName: rst.userName,
+        salt: salt,
+        password_crypted: md5(plainPwd + salt).toString()
     });
+    ctx.models.tempUserModel.remove({ userName: rst.userName }, function (err) {
+        if (!err) { console.log('删除临时用户成功', rst.userName); return; }
+        console.log(err);
+    })
     await newUser.save();
+    console.log('创建用户成功', rst.userName);
     ctx.response.status = 200;
     ctx.response.body = {
         success: 'new user created',

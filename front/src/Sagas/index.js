@@ -32,17 +32,25 @@ function* register() {
         var ciphertextId = CryptoJS.AES.encrypt(id, checkCode);
         var { response, error } = yield call(AxiosPost('http://localhost:4396/newUserCreate',{
             id:id,
-            pwd_cryptoed:ciphertext.toString()
+            pwd_cryptoed:ciphertext.toString(),
+            id_cryptoed:ciphertextId.toString()
         }));
         if (response) {
             console.log('response', response);
+            yield put(creaters.toLogin());
         } else {
             console.log('err', error);
             continue;
         }
     }
 }
-const allSagas = [register()];
+function* refreshToLogin() {
+    while (true) {
+        yield take(actionTypes.toLogin);
+        window.location.pathname = 'login';
+    }
+}
+const allSagas = [register(),refreshToLogin()];
 //执行所有saga
 export default function* rootSaga(getState) {
     yield all(allSagas)

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import NewUser from './Containers/NewUser';
+import Login from './Containers/Login';
 import Helper from './historyHelper';
 import store from './store';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 
 
 class App extends Component {
@@ -19,10 +20,9 @@ class App extends Component {
 				<BrowserRouter>
 					<div>
 						<Helper/>
-						<Route path='/login' render={() => {
-							return (<div>login</div>)
-						}} />
+						<Route path='/login' component = {Login} />
 						<Route path='/newUser' component={NewUser} />
+						{/* <button onClick = {()=>{window.location.pathname = 'login'}}> login</button> */}
 					</div>
 				</BrowserRouter>
 			</Provider>
