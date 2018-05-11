@@ -2,6 +2,8 @@ import { put, takeEvery, all, take, call } from 'redux-saga/effects'
 import actionTypes from '../ActionCreaters/actionTypes';
 import { creaters } from '../ActionCreaters';
 import { AxiosPost, AxiosRequest } from '../network';
+import {getHistory} from '../historyHelper';
+
 const CryptoJS = require("crypto-js");
 const md5 = require('crypto-js/md5');
 
@@ -43,15 +45,29 @@ function* refreshToLogin() {
 function* login() {
     while (true) {
         let action = yield take(actionTypes.requestLogin);
-        let minutes = Date.now()/(1000*60);
+        let minutes = Math.floor(Date.now() / (1000 * 60));
         let { id, pwd } = action.payload;
-        var { response, error } = yield call(AxiosRequest('get','http://localhost:4396/getsalt?id='+id,{}));
-        // var { response, error } = yield call(AxiosPostWithAuth('http://localhost:4396/loginPrepare',{},{
-        //     id:id,
-        //     pwd_cry:md5(pwd + minutes).toString()
-        // }));
+        var { response, error } = yield call(AxiosRequest('get', 'http://localhost:4396/getsalt?id=' + id, {}));
+        let salt = null;
         if (response) {
-            console.log('response', response);
+            salt = response.data.salt;
+        } else {
+            console.log('err', error);
+            continue;
+        }
+        let pwdCry = md5(pwd + salt).toString();
+        var { response, error } = yield call(AxiosRequest('post', 'http://localhost:4396/loginPrepare', {}, {
+            id: id,
+            token: md5(pwdCry + minutes)
+        }));
+        if (response) {
+            if (response.data.success) {
+                yield put(creaters.saveUserData({ id, pwd_cryptoed: pwdCry }));
+                // console.log(HistoryHelper);
+                // setTimeout(()=>{
+                //     getHistory().push('/test');
+                // },3000) 
+            }
         } else {
             console.log('err', error);
             continue;

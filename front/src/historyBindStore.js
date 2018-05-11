@@ -6,9 +6,10 @@ export const historyChangeActionCreater = (payload) => {
 
 }
 export const historyChangeReducer = (prevState, action) => {
-    // console.log('his reducer');
+
+    console.log('his reducer',prevState);
     if (action.type === type) {
-        return { ...action.payload };
+        return { ...prevState,...action.payload };
     }
     return { ...prevState }
 }

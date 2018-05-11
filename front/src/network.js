@@ -8,23 +8,16 @@ export const AxiosPost = (url, data) => {
     }
 }
 
-export const AxiosRequest = (method,url, data = {}, headers = {}) => {
+export const AxiosRequest = (method, url, data = {}, headers = {}) => {
     return () => {
         return axios({
             method: method,
             baseURL: '',
             url: url,
             headers: headers,
-            data:data
+            data: data
         })
             .then(response => ({ response }))
             .catch(error => ({ error }))
-        // return axios.post(url, {
-        //     data:data,
-        //     headers: {
-        //         id: id,
-        //         token: pwd_cry
-        //     }
-        // })
     }
 }

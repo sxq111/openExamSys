@@ -30,7 +30,7 @@ mongooseInstance.connection.once('open', () => {
     app.use(registerRouter());
     app.use(getSalt());
     app.use(auth);
-    app.use(login);
+    app.use(login());
     app.use(controller());
     app.listen(4396);
     console.log('app started at port 4396...');

@@ -12,6 +12,14 @@ export default class Login extends Component {
         id: '',
         pwd: ''
     }
+    componentDidUpdate(){
+        if(this.props.userData && this.props.userData.id){
+        setTimeout(()=>{
+                this.props.history.push('/test');
+        },1000);
+
+        }
+    }
     render() {
         return (
             <div>
@@ -28,6 +36,11 @@ export default class Login extends Component {
                         this.props.dispatch(creaters.requestLogin(this.state));
                     }}
                 >登陆</button>
+                                {/* <button
+                    onClick={() => {
+                        this.props.history.push('/test');
+                    }}
+                >TEST</button> */}
             </div>
         )
     }

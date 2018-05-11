@@ -5,11 +5,13 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './Sagas';
 import actionTypes from './ActionCreaters/actionTypes' ;
 import regeisterReducer from './Reducer/regeister';
- 
+import userDataReducer from './Reducer/uesrData'; 
+
 const sagaMiddleware = createSagaMiddleware();
 const reducer = combineReducers({
     location: historyChangeReducer,
-    regeister:regeisterReducer
+    regeister:regeisterReducer,
+    userData:userDataReducer
 });
 const store = createStore(reducer,
     {},

@@ -3,10 +3,13 @@ const utils = require('../utils');
 router.get('/getsalt', async (ctx,next)=>{
     let {querystring} = ctx;
     querystring = querystring.replace(/id=/,'');
-    let thisUser = await utils.findOnePromise(ctx.models.loginTempData,{userName:querystring});
+    console.log('find ',querystring)
+    let thisUser = await utils.findOnePromise(ctx.models.userModel,{userName:querystring});
     if(!thisUser)throw new Error('do not have this id');
-    
-
+    ctx.response.status = 200;
+    ctx.response.body = {
+        salt:thisUser.salt
+    }
 });
 
 module.exports = function () {
