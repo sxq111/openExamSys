@@ -46,7 +46,6 @@ const newUserCreate = async (ctx, next) => {
     ctx.response.body = {
         success: 'new user created',
     }
-
 }
 
 router.post('/newUserPrepare', newUserPrepare);

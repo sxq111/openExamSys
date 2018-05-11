@@ -7,6 +7,9 @@ const koaBody = require('koa-body');
 const errListener = require('./middlewares/requestErrorListener');
 const registerRouter = require('./middlewares/register');
 const mail = require('./middlewares/mail');
+const auth = require('./middlewares/auth');
+const login = require('./middlewares/login');
+const getSalt = require('./middlewares/getSalt');
 const app = new Koa();
 app.on('error', (err, ctx) => {
     console.log('internal error', err)
@@ -25,6 +28,9 @@ mongooseInstance.connection.once('open', () => {
     });
     app.use(mail())
     app.use(registerRouter());
+    app.use(getSalt());
+    app.use(auth);
+    app.use(login);
     app.use(controller());
     app.listen(4396);
     console.log('app started at port 4396...');

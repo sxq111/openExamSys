@@ -5,5 +5,6 @@ export const creaters = {
     getCheckCode:actionCreaterFactory(actionTypes.getCheckCode),
     typeInCheckCode:actionCreaterFactory(actionTypes.typeInCheckCode),
     sendCryptoToServe:actionCreaterFactory(actionTypes.sendCryptoToServe),
-    toLogin:actionCreaterFactory(actionTypes.toLogin)
+    toLogin:actionCreaterFactory(actionTypes.toLogin),
+    requestLogin:actionCreaterFactory(actionTypes.requestLogin)
 }
