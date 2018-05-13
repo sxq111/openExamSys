@@ -4,7 +4,9 @@ const actionTypes = {
     sendCryptoToServe: '发送加密后的密码信息到服务端，用来创建新用户',
     toLogin: '切换到登陆界面',
     requestLogin:'申请登录',
-    saveUserData:'保存用户的信息'
+    saveUserData:'保存用户的信息',
+    createInformation:'新的系统信息',
+    setMessageVisiblity:'设置系统信息的显示隐藏'
 }
 
 export default makeEnum(actionTypes);

@@ -7,15 +7,15 @@ import {getHistory} from '../historyHelper';
 const CryptoJS = require("crypto-js");
 const md5 = require('crypto-js/md5');
 
-const delay = (ms) => new Promise(res => setTimeout(res, ms))
-
 function* register() {
     while (true) {
         let action = yield take(actionTypes.getCheckCode);
         var { response, error } = yield call(AxiosPost('http://localhost:4396/newUserPrepare', action.payload));
         if (response) {
-            yield put(creaters.typeInCheckCode())
+            yield put(creaters.typeInCheckCode());
+            yield put(creaters.createInformation({message:'邮件已经发送，请查看',type:'success'}));
         } else {
+            yield put(creaters.createInformation({message:'请求失败',type:'fail'}));
             continue;
         }
         action = yield take(actionTypes.sendCryptoToServe);
@@ -29,9 +29,10 @@ function* register() {
         }));
         if (response) {
             console.log('response', response);
+            yield put(creaters.createInformation({message:'注册成功',type:'success'}));
             yield put(creaters.toLogin());
         } else {
-            console.log('err', error);
+            yield put(creaters.createInformation({message:'注册失败',type:'fail'}));
             continue;
         }
     }
@@ -39,7 +40,8 @@ function* register() {
 function* refreshToLogin() {
     while (true) {
         yield take(actionTypes.toLogin);
-        window.location.pathname = 'login';
+        // window.location.pathname = 'login';
+        getHistory().push('/login');
     }
 }
 function* login() {
@@ -60,20 +62,28 @@ function* login() {
             id: id,
             token: md5(pwdCry + minutes)
         }));
+        console.log(minutes);
         if (response) {
             if (response.data.success) {
                 yield put(creaters.saveUserData({ id, pwd_cryptoed: pwdCry }));
+                yield put(creaters.createInformation({message:'登录成功',type:'success'}));
                 // console.log(HistoryHelper);
                 // setTimeout(()=>{
-                //     getHistory().push('/test');
+                getHistory().push('/test');
                 // },3000) 
             }
         } else {
             console.log('err', error);
+            yield put(creaters.createInformation({message:'登录失败',type:'fail'}));
             continue;
         }
     }
 }
+
+function* handleMessage() {
+
+}
+
 const allSagas = [register(), refreshToLogin(), login()];
 //执行所有saga
 export default function* rootSaga(getState) {

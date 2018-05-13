@@ -6,12 +6,14 @@ import rootSaga from './Sagas';
 import actionTypes from './ActionCreaters/actionTypes' ;
 import regeisterReducer from './Reducer/regeister';
 import userDataReducer from './Reducer/uesrData'; 
+import messageReducer from './Reducer/message';
 
 const sagaMiddleware = createSagaMiddleware();
 const reducer = combineReducers({
     location: historyChangeReducer,
     regeister:regeisterReducer,
-    userData:userDataReducer
+    userData:userDataReducer,
+    message:messageReducer
 });
 const store = createStore(reducer,
     {},

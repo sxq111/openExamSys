@@ -14,9 +14,9 @@ export default class Login extends Component {
     }
     componentDidUpdate(){
         if(this.props.userData && this.props.userData.id){
-        setTimeout(()=>{
-                this.props.history.push('/test');
-        },1000);
+        // setTimeout(()=>{
+        //         this.props.history.push('/test');
+        // },1000);
 
         }
     }

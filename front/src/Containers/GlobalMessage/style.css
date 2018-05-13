@@ -1,0 +1,13 @@
+.outSide{
+    position: fixed;
+    /* border: 1px solid black; */
+    /* border-radius: 10px; */
+    width: 300px;
+    right: 20px;
+    top:10px;
+}
+.item{
+    width:auto;
+    border: 1px solid black;
+    border-radius: 10px;
+}
