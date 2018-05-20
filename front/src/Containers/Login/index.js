@@ -13,12 +13,6 @@ export default class Login extends Component {
         pwd: ''
     }
     componentDidUpdate(){
-        if(this.props.userData && this.props.userData.id){
-        // setTimeout(()=>{
-        //         this.props.history.push('/test');
-        // },1000);
-
-        }
     }
     render() {
         return (
