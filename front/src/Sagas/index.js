@@ -67,10 +67,7 @@ function* login() {
             if (response.data.success) {
                 yield put(creaters.saveUserData({ id, pwd_cryptoed: pwdCry }));
                 yield put(creaters.createInformation({message:'登录成功',type:'success'}));
-                // console.log(HistoryHelper);
-                // setTimeout(()=>{
                 getHistory().push('/test');
-                // },3000) 
             }
         } else {
             console.log('err', error);

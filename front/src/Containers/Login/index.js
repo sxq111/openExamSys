@@ -30,11 +30,6 @@ export default class Login extends Component {
                         this.props.dispatch(creaters.requestLogin(this.state));
                     }}
                 >登陆</button>
-                                {/* <button
-                    onClick={() => {
-                        this.props.history.push('/test');
-                    }}
-                >TEST</button> */}
             </div>
         )
     }

@@ -15,5 +15,6 @@ module.exports = async (ctx, next) => {
     console.log(minute);
     if (!set[token]) { throw new Error('用户验证失败2'); return; }
     console.log('用户验证成功');
+    ctx.currentUserId = rst.userName;
     next();
 }
